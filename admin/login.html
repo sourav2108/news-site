@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin login page</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container" >
+       <div class="row " style="height: 500px;">
+           <div class="col-4  offset-4 align-self-center">
+               <h1 class="text-center bg-primary">SK NEWS</h1><hr>
+                 <div id="msg" class="alert alert-warning" role="alert"></div>
+               <form class="form" id="loginfm">
+                <label for="username">UserName</label>
+                <input type="text" id="username" name="username" class="form-control">
+                <label for="pass">Password</label>
+                <input type="password" name="pass" id="pass" class="form-control">
+               </form>
+               <div class="text-center">
+                <button class="btn btn-outline-primary m-4" id="lgbtn">LOGIN</button>
+               </div>
+           </div>
+       </div>
+    </div>
+
+    
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#msg").fadeOut();
+            $("#lgbtn").click(function(){
+                var name=$("#username").val();
+                var pass=$("#pass").val();
+               if(name=="" || pass=="")
+               {
+                $("#msg").fadeIn();
+                   $("#msg").html("plz fill all the field");
+               }
+               else
+               {
+                $("#msg").fadeOut();
+                   $.ajax({
+                       url: "log.php",
+                       type: "POST",
+                       data: {uname:name,pass:pass},
+                       success: function(data){
+                           if(data==1)
+                           {
+                               location="admin.php";
+                           }
+                           else{
+                            $("#msg").fadeIn();
+                            $("#msg").html("Incrroct username or password");
+                           }
+                       
+                       }
+                   });
+               }
+            });
+        });
+    </script>
+</body>
+</html>
